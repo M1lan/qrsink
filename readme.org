@@ -1,0 +1,143 @@
+#+creator: Emacs 31.0.50 (Org mode 9.7.11)
+#+title: sinkqr
+#+subtitle: very simple redis usage example
+#+author: insomniaSalt`
+#+date: <2024-12-25 Wed>
+#+email: insomniaSalt@gmail.com
+#+description: sends a user-supplied string to redis,
+#+exclude_tags: noexport
+#+html_container: div
+#+html_content_class: content
+#+html_doctype: xhtml-strict
+#+html_equation_reference_format: \eqref{%s}
+#+html_head:
+#+html_head_extra:
+#+html_link_home:
+#+html_link_up:
+#+html_mathjax:
+#+infojs_opt:
+#+keywords:
+#+language: en
+#+options: ':nil *:t -:t ::t <:t H:3 \n:nil ^:t arch:headline author:t
+#+options: broken-links:nil c:nil creator:nil d:(not "LOGBOOK") date:t
+#+options: e:t email:nil expand-links:t f:t inline:t num:t p:nil
+#+options: html-link-use-abs-url:nil html-postamble:auto
+#+options: html-preamble:t html-scripts:nil html-style:t
+#+options: html5-fancy:nil tex:t
+#+options: pri:nil prop:nil stat:t tags:t tasks:t tex:t timestamp:t
+#+options: title:t toc:t todo:t |:t
+#+select_tags: export
+#+cite_export:
+* idea
+very simple webinterface to submit key entries into redis. can be used
+to process custom "codes" or even qr-codes. basically a sink / sinkhole.
+
+* flow
+user enters code -> basic validity check -> store in redis -> "result".
+
+* requirements
+- Go https://go.dev
+  - net/http
+  - chi
+  - go-redis
+- Redis https://redis.io/
+
+** optional
+- just https://just.systems
+
+* components
+** ./main.go
+- contains all of the backend code
+  - handlers
+  - routes
+** ./views subfolder
+- contains the .templ templates from which the *_templ.go files are
+  generated.
+- this is basically our frontend. At this point in time it's only HTML,
+  there is no CSS and no JS for the frontend.  We can add that later.
+** ./justfile
+Just is a simple command-runner.  To use it, install [[https://just.systems][just]] and run it.
+You don't need it, see 'compilation' section below.
+
+* compilation
+#+begin_src bash
+  just doit
+#+end_src
+
+or equivalent:
+#+begin_src bash
+  go mod tidy
+  templ generate
+  go build .
+#+end_src
+
+* run
+#+begin_src bash
+  ./qrsink
+#+end_src
+
+Then, you can point your webbrowser at http://127.0.0.1:8080/ or at
+http://127.0.0.1:8080/entry or at http://127.0.0.1:8080/scan/CODEHERE
+(replace CODEHERE with whatever code you like to store).
+
+* random stuff
+** about "code" validity
+PLEASE TAKE NOTE - the word "codes" here is used in the sense of
+QR-codes, or maybe even a short sequences of letters and/or numbers!
+Just as the ones found under a bottle cap during promotions and
+tombolas... you can scan or enter them on a website, to maybe win a
+little something, of course, in exchange for all of your personal
+data... Maybe even only after first registering and also sending in the
+original bottle-cap to prove.
+
+Whatever can be entered into the input box is stored into the
+system... Yes, we have certain ability to say "ok, this is what think a
+valid code looks like"... example: we can say silly things like "it must
+be exactly X characters long; contain these or that special character at
+a certain position... and similar"... But don't fool yourself. None of
+this can provide any security or proof of authenticity!!! DO NOT RELY ON
+IT!
+
+#+BEGIN_QUOTE
+Nowadays, attempts to prevent fraud and counterfeit where it matters,
+means we no longer have fixed paper codes, but use electronic tickets
+instead. Such tickets re-generate a new code every 15 seconds, similar
+to MFA.
+
+Just to make it REALLY clear that there is NO way to rely on these code
+to always be authentic - they can easily be guessed.
+
+There are 10,000 possible 4-digit PIN codes, ranging from 0000 to 9999.
+#+END_QUOTE
+
+** Don't be a fool doing foolish things!
+A fool would assume:
+- that it's hard to "guess" a code format or just brute-force it. It's
+  not. It's super easy.
+- that anything is hidden in QR codes. It's nothing but plain text and
+  everyone with a reader can read it (that's WHY they work, duh...).
+- that these codes/tokens themselves are important for this system /
+  product (whatever it will be), they are not.
+  - what do I mean by that: "does this code look like something that
+    could be valid? (i.e: EAN)"... "has it been used before?"... "what
+    does this code represent for us, internally, and how do we use it".
+- Including some sort of very clear disclaimer is super important. Like,
+  when there is a big lottery win.. in order to claim the prize, users
+  MUST include some form of physical proof that their code entry
+  actually was legit, and maybe even that they purchased it.  So, they
+  have to include some form of personal verification (id/passport/...)
+  the code, the original bottle cap (or whatever), and probably also the
+  receipt that shows they purchased the winning bottle.
+
+Only a fool would do things on the frontend that belong into the
+backend.
+
+#+BEGIN_QUOTE
+Check out this site, which was recently made -> https://everyuuid.com/
+and this blog
+article... https://eieio.games/blog/writing-down-every-uuid/ ... it's a
+joke about "listing every UUID ever, possible".
+
+This should once-and-for-all illustrate what I mean above. IDs, Tokens,
+Codes, PINs, and everything else can always be brute forced and guessed.
+#+END_QUOTE

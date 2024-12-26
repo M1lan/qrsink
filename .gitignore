@@ -1,0 +1,13 @@
+# ignore everything (especially .env)
+.env
+/*
+
+# exclude these because we want them git-tracked:
+!.gitignore
+!main.go
+!views/*.templ
+!justfile
+!readme.org
+!go.mod
+!go.sum
+!.env.sample
