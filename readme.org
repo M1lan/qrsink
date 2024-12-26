@@ -1,5 +1,5 @@
 #+creator: Emacs 31.0.50 (Org mode 9.7.11)
-#+title: sinkqr
+#+title: qrsink
 #+subtitle: very simple redis usage example
 #+author: insomniaSalt`
 #+date: <2024-12-25 Wed>
