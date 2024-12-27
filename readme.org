@@ -53,8 +53,7 @@ user enters code -> basic validity check -> store in redis -> "result".
 ** ./views subfolder
 - contains the .templ templates from which the *_templ.go files are
   generated.
-- this is basically our frontend. At this point in time it's only HTML,
-  there is no CSS and no JS for the frontend.  We can add that later.
+- this is basically our frontend. sufficient for now or even forever.
 ** ./justfile
 Just is a simple command-runner.  To use it, install [[https://just.systems][just]] and run it.
 You don't need it, see 'compilation' section below.
