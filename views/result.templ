@@ -1,0 +1,30 @@
+package views
+
+import "time"
+
+type ResultData struct {
+    Code      string
+    Status    string
+    Timestamp time.Time
+}
+
+templ Result(r ResultData) {
+    @layout("Result") {
+        <div class={"result " + r.Status}>
+            <h1 style="font-size: 2rem; margin-bottom: 1rem;">
+                switch r.Status {
+                    case "valid":
+                        "✓ Valid Code"
+                    case "invalid":
+                        "✗ Invalid Code"
+                    case "duplicate":
+                        "⚠ Already Used"
+                    default:
+                        "⚠ Error"
+                }
+            </h1>
+            <p style="font-size: 1.25rem; opacity: 0.8;">Code: {r.Code}</p>
+            <p style="font-size: 1rem; opacity: 0.6;">{r.Timestamp.Format("Jan 02, 2006 15:04:05")}</p>
+        </div>
+    }
+}

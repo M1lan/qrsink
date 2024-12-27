@@ -1,0 +1,11 @@
+package views
+
+templ Index() {
+    @layout("Enter Code") {
+        <h1 style="font-size: 2.5rem; margin-bottom: 2rem;">QR Check</h1>
+        <form action="/result" method="post">
+            <input type="text" name="code" placeholder="Enter your code" autocomplete="off" />
+            <button type="submit">Validate</button>
+        </form>
+    }
+}

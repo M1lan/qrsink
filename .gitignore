@@ -5,7 +5,7 @@
 # exclude these because we want them git-tracked:
 !.gitignore
 !main.go
-!./views
+!views/
 !*.templ
 !justfile
 !readme.org

@@ -1,0 +1,88 @@
+package views
+
+templ layout(title string) {
+    <!DOCTYPE html>
+    <html>
+        <head>
+            <title>{title}</title>
+            <meta name="viewport" content="width=device-width, initial-scale=1" />
+            <style>
+                :root {
+                    --primary: #FF3366;
+                    --bg: #111111;
+                    --text: #FFFFFF;
+                }
+
+                body {
+                    background: var(--bg);
+                    color: var(--text);
+                    font-family: system-ui;
+                    min-height: 100vh;
+                    margin: 0;
+                    display: grid;
+                    place-items: center;
+                }
+
+                .container {
+                    text-align: center;
+                    padding: 2rem;
+                    max-width: 500px;
+                    width: 100%;
+                }
+
+                input {
+                    width: 100%;
+                    padding: 1rem;
+                    font-size: 1.25rem;
+                    border: 2px solid var(--primary);
+                    border-radius: 8px;
+                    background: transparent;
+                    color: var(--text);
+                    margin-bottom: 1rem;
+                    transition: all 0.3s ease;
+                }
+
+                input:focus {
+                    outline: none;
+                    box-shadow: 0 0 15px var(--primary);
+                }
+
+                button {
+                    background: var(--primary);
+                    color: var(--text);
+                    border: none;
+                    padding: 1rem 2rem;
+                    font-size: 1.25rem;
+                    border-radius: 8px;
+                    cursor: pointer;
+                    transition: transform 0.2s ease;
+                }
+
+                button:hover {
+                    transform: translateY(-2px);
+                }
+
+                .result {
+                    margin-top: 2rem;
+                }
+
+                .valid {
+                    color: #4CAF50;
+                }
+
+                .invalid, .error {
+                    color: #f44336;
+                }
+
+                .duplicate {
+                    color: #FFC107;
+                }
+            </style>
+        </head>
+        <body>
+            <div class="container">
+                { children... }
+            </div>
+        </body>
+    </html>
+}
